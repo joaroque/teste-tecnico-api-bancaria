@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.use("/api", clientRouter);
+app.use("/clients", clientRouter);
 
 // @ts-ignore
 app.get("/", (req, res) => {
