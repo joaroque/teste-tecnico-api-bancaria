@@ -18,6 +18,7 @@ export const createClient = async (username, password, cpf) => {
       },
     });
   });
+  return client;
 };
 
 export const listTransactions = async (clientId) => {
