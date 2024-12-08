@@ -7,8 +7,8 @@ import {
 
 const clientRouter = Router();
 
-clientRouter.get("/transactions/:clientId", listTransactionsController);
+clientRouter.get("/pix:clientId", listTransactionsController);
 clientRouter.post("/", createClientController);
-clientRouter.post("/add-pix/:clientId", addPixController);
+clientRouter.post("/pix/:clientId", addPixController);
 
 export default clientRouter;
