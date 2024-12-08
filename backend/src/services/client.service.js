@@ -11,7 +11,7 @@ export const createClient = async (username, password, cpf) => {
       },
     });
 
-    const client = await prisma.client.create({
+    return await prisma.client.create({
       data: {
         userId: user.id,
         cpf,
