@@ -4,6 +4,8 @@ const prismaClient = new PrismaClient();
 
 export const createClient = async (username, password, cpf) => {
   const client = await prismaClient.$transaction(async (prisma) => {
+    // todo: adicionar lista de pix vazio
+
     const user = await prisma.user.create({
       data: {
         username,
@@ -15,6 +17,13 @@ export const createClient = async (username, password, cpf) => {
       data: {
         userId: user.id,
         cpf,
+      },
+      include: {
+        user: {
+          select: {
+            username: true,
+          },
+        },
       },
     });
   });
