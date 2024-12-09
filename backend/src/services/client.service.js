@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt";
 
 const prismaClient = new PrismaClient();
 
@@ -6,10 +7,12 @@ export const createClient = async (username, password, cpf) => {
   const client = await prismaClient.$transaction(async (prisma) => {
     // todo: adicionar lista de pix vazio
 
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const user = await prisma.user.create({
       data: {
         username,
-        password,
+        password: hashedPassword,
       },
     });
 
@@ -46,7 +49,21 @@ export const addPix = async (clientId, amount) => {
 };
 
 export const getUserByUsername = async (username) => {
-  return prismaClient.user.findFirst({
+  return prismaClient.user.findUnique({
     where: { username },
+    include: {
+      client: true,
+    },
+  });
+};
+
+export const getUserById = async (id) => {
+  return prismaClient.user.findUnique({
+    where: { id },
+    include: {
+      client: {
+        select: { id: true },
+      },
+    },
   });
 };
